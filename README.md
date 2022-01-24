@@ -1,1 +1,1 @@
-#### Natural language processing related repositories
+#### Natural language processing related scripts
