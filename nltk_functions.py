@@ -24,5 +24,15 @@ def content_fraction(text):
     content = [w for w in text if w.lower() not in stopwords]
     return len(content) / len(text)
 
+def generate_model(cfd, word, num=15):
+    for i in range(num):
+        print(word, end=' ')
+        word = cfd[word].max()
+
+
+def stress(pron):
+    return [char for phone in pron for char in phone if char.isdigit()] # whatever is in front of 1st FOR statement
+                                                                        # is dded to the list
+
 wordlist = nltk.corpus.words.words()
 stopwords = nltk.corpus.stopwords.words('russian')
