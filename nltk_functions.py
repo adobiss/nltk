@@ -45,6 +45,16 @@ def stem(word):
     stem, suffix = re.findall(regexp, word)[0]
     return stem
 
+def tabulate(cfdist, words, categories, width_cat, width_event):                              # dynamic column width: 'max(len(x) for w in words)'
+    print('{:{width_cat}}'.format('Category', width_cat=width_cat), end=' ')                  # column headings
+    for x in words:
+        print('{:>{width_event}}'.format(x, width_event=width_event), end=' ')
+    print()
+    for x in categories:
+        print('{:{width_cat}}'.format(x, width_cat=width_cat), end=' ')                       # row heading
+        for y in words:                                                                       # for each word
+            print('{:{width_event}}'.format(cfdist[x][y], width_event=width_event), end=' ')  # print table cell
+        print()    
 
 wordlist = nltk.corpus.words.words()
 stopwords = nltk.corpus.stopwords.words('russian')
