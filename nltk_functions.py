@@ -30,7 +30,6 @@ def generate_model(cfd, word, num=15):
         print(word, end=' ')
         word = cfd[word].max()
 
-
 def stress(pron):
     return [char for phone in pron for char in phone if char.isdigit()] # whatever is in front of 1st FOR statement
                                                                         # is dded to the list
@@ -55,6 +54,16 @@ def tabulate(cfdist, words, categories, width_cat, width_event):                
         for y in words:                                                                       # for each word
             print('{:{width_event}}'.format(cfdist[x][y], width_event=width_event), end=' ')  # print table cell
         print()    
+
+def findtags(tags_prefix, tagged_text):
+    cfd = nltk.ConditionalFreqDist((y, x) for x, y in tagged_text
+                                   if y.startswith(tags_prefix))
+    return dict((y, cfd[y].most_common(5)) for y in cfd.conditions())
+
+def process(sentence):
+    for (x1, y1), (x2, y2), (x3, y3) in nltk.trigrams(sentence):
+        if(y1.startswith('V') and y2 == 'TO' and y3.startswith('V')):
+            print(x1, x2, x3)
 
 wordlist = nltk.corpus.words.words()
 stopwords = nltk.corpus.stopwords.words('russian')

@@ -38,7 +38,7 @@ def anneal(text, segs, iterations, cooling_rate):
         score, segs = best, best_segs
         temperature = temperature / cooling_rate
         print(evaluate(text, segs), segment(text, segs))
-        print()
+        #print()
     return segs
 
 	
