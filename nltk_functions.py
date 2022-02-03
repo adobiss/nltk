@@ -65,5 +65,26 @@ def process(sentence):
         if(y1.startswith('V') and y2 == 'TO' and y3.startswith('V')):
             print(x1, x2, x3)
 
+def performance(cfd, wordlist, tag_sents):
+    likely_tags = dict((x, cfd[x].max()) for x in wordlist)
+    baseline_tagger = nltk.UnigramTagger(model=likely_tags,
+                                         backoff=nltk.DefaultTagger('NN'))
+    return baseline_tagger.evaluate(tag_sents)
+
+def display(most_common_words, tagged_words, tag_sents):
+    import pylab
+    word_freqs = most_common_words
+    words_by_freq = [x for x, y in word_freqs]
+    cfd = nltk.ConditionalFreqDist(tagged_words)
+    sizes = 2 ** pylab.arange(15)
+    perfs = [performance(cfd, words_by_freq[:x], tag_sents) for x in sizes]
+    pylab.plot(sizes, perfs, '-bo')
+    pylab.title('Lookup Tagger Performance with Varying Model Size')
+    pylab.xlabel('Model Size')
+    pylab.ylabel('Performance')
+    pylab.show()
+
+
+
 wordlist = nltk.corpus.words.words()
 stopwords = nltk.corpus.stopwords.words('russian')
