@@ -84,7 +84,18 @@ def display(most_common_words, tagged_words, tag_sents):
     pylab.ylabel('Performance')
     pylab.show()
 
+def gender_features(name):
+    return {'last_letter': name[-1]}
 
+def gender_features2(name):
+    features = {}
+    features['first_letter'] = name[0].lower()
+    features['last_letter'] = name[-1].lower()
+    for x in 'abcdefghijklmnopqrstuvwxyz':
+        features['count({})'.format(x)] = name.lower().count(x)
+        features['has({})'.format(x)] = (x in name.lower())
+    return features
 
+                                         
 wordlist = nltk.corpus.words.words()
 stopwords = nltk.corpus.stopwords.words('russian')
