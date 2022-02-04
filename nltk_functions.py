@@ -1,5 +1,6 @@
 import nltk
 import re
+import math
 
 def lexical_diversity(text):
     return len(text) / len(set(text))
@@ -85,7 +86,8 @@ def display(most_common_words, tagged_words, tag_sents):
     pylab.show()
 
 def gender_features(name):
-    return {'last_letter': name[-1]}
+    return {'suffix1': name[-1],
+            'suffix2': name[-2:]}
 
 def gender_features2(name):
     features = {}
@@ -96,6 +98,10 @@ def gender_features2(name):
         features['has({})'.format(x)] = (x in name.lower())
     return features
 
+def entropy(labels):
+    freqdist = nltk.FreqDist(labels)
+    probs = [freqdist.freq(x) for x in freqdist]
+    return -sum(x * math.log(x,2) for x in probs)
                                          
 wordlist = nltk.corpus.words.words()
 stopwords = nltk.corpus.stopwords.words('russian')
