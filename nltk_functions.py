@@ -102,6 +102,37 @@ def entropy(labels):
     freqdist = nltk.FreqDist(labels)
     probs = [freqdist.freq(x) for x in freqdist]
     return -sum(x * math.log(x,2) for x in probs)
+
+def document_features(document, all_words, word_features):
+    document_words = set(document) # checking an 'IF x in y' statement is faster in a set than in a list
+    features = {}
+    for x in word_features:
+        features['contains({})'.format(x)] = (x in document_words)
+    return features
+
+
+# Context-dependant feature extractor:
+    
+def pos_features_context(sentence, i):
+    features = {"suffix(1)": sentence[i][-1:],
+                "suffix(2)": sentence[i][-2:],
+                "suffix(3)": sentence[i][-3:]}
+    if i == 0:
+        features["prev-word"] = "<START>"
+    else:
+        features["prev-word"] = sentence[i-1]
+    return features
+
+
+# Uses pos_features_context() to build featuresets
+# (requires review to work in conjunction with apply_features()):
+ 
+def featureset_buider(tagged_sents):
+    featuresets = []
+    for x in tagged_sents:
+        untagged_sent = nltk.tag.untag(x)
+        for i, (word, tag) in enumerate(x):
+            featuresets.append( (pos_features_context(untagged_sent, i), tag) ) 
                                          
 wordlist = nltk.corpus.words.words()
 stopwords = nltk.corpus.stopwords.words('russian')
