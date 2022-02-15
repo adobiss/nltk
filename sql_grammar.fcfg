@@ -1,8 +1,9 @@
 % start S
 S[SEM=(?np + WHERE + ?vp)] -> NP[SEM=?np] VP[SEM=?vp]
-VP[SEM=(?v + ?np)] -> IV[SEM=?v] NP[SEM=?np]
+VP[SEM=(?v + ?np)] -> TV[SEM=?v] NP[SEM=?np]
 VP[SEM=(?v + ?pp)] -> IV[SEM=?v] PP[SEM=?pp]
 VP[SEM=(?v + ?ap)] -> IV[SEM=?v] AP[SEM=?ap]
+VP[SEM=(?vp1 + ?c + ?vp2)] -> VP[SEM=?vp1] Conj[SEM=?c] VP[SEM=?vp2]
 NP[SEM=(?n + ?pp)] -> N[SEM=?n] PP[SEM=?pp]
 NP[SEM=(?det + ?n)] -> Det[SEM=?det] N[SEM=?n]
 PP[SEM=(?p + ?np)] -> P[SEM=?p] NP[SEM=?np]
@@ -14,7 +15,9 @@ N[SEM='City FROM city_table'] -> 'cities'
 IV[SEM=''] -> 'are'
 A[SEM=''] -> 'located'
 P[SEM=''] -> 'in'
-IV[SEM=''] -> 'have'
+TV[SEM=''] -> 'have'
 N[SEM='Population'] -> 'populations'
 P[SEM='>'] -> 'above'
 NP[SEM='1000'] -> '1,000,000'
+Conj[SEM='AND'] -> 'and'
+
